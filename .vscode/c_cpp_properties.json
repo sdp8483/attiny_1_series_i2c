@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/avr/include"
+            ],
+            "defines": [
+                "F_CPU=20000000UL",
+                "BOARD=ATtiny212",
+                ""
+            ],
+
+            "compilerPath": "/usr/bin/avr-gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++11",
+            "compilerArgs": [
+                "-mmcu=attiny212",
+                ""
+            ],
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
