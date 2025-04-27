@@ -10,7 +10,9 @@
 #include <stdint.h>
 
 /* Defines ------------------------------------------------------------------- */
-#define I2C_PINS_ENABLE_INTERNAL_PULLUPS    /* enable weak internal pullups on SDA and SCL pins */
+#ifndef I2C_PINS_ENABLE_INTERNAL_PULLUPS        /* define this using build flags to change in platformio */
+#define I2C_PINS_ENABLE_INTERNAL_PULLUPS    0   /* enable weak internal pullups on SDA and SCL pins */
+#endif
 
 #if (BOARD == ATtiny212) || (BOARD == ATtiny212)
 /* ATtiny212 and ATtiny412 use PA1 and PA2 as I2C pins*/
