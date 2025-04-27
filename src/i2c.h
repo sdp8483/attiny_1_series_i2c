@@ -47,12 +47,6 @@
 /* Class --------------------------------------------------------------------- */
 class I2C_HOST {
     public:
-        // enum i2c_sck_freq {
-        //     I2C_SCK_100kHz,             /* i2c clock frequency of 100kHz, standard mode (Sm) */
-        //     I2C_SCK_400kHz,             /* i2c clock frequency of 400hHz, fast mode (Fm) */
-        //     I2C_SCK_1MHz,               /* i2c clock frequency of 1MHz, fast mode plus (Fm+) */
-        // };
-
         enum i2c_host_direction {
             I2C_HOST_WRITE = 0,         /* host places address on bus with write flag set */
             I2C_HOST_READ = 1           /* host places address on bus with read flag set */
@@ -80,8 +74,7 @@ class I2C_HOST {
             I2C_UKNOWN_ERROR
         };
 
-        // void init(i2c_sck_freq sck_freq = i2c_sck_freq::I2C_SCK_100kHz);
-        void init(void);
+        void init(void);                /* set sck using I2C_SCK_BAUD and build flags */
 
         i2c_state start(uint8_t address, i2c_host_direction direction);
         i2c_state write(uint8_t *data);

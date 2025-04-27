@@ -2,9 +2,8 @@
 
 /* ---------------------------------------------------------------------------
  * @brief TWI peripheral as a host I2C bus
- *   @param sck_frq I2C bus clock speed
+ *   @param void
  *   @return void                                                              */
-// void I2C_HOST::init(i2c_sck_freq sck_freq = i2c_sck_freq::I2C_SCK_100kHz) {
 void I2C_HOST::init(void) {
     /* setup pins for I2C */
     I2C_PORT.DIRCLR = SCL_PIN;      /* set SCL as tristate input */
@@ -45,32 +44,6 @@ void I2C_HOST::init(void) {
     TWI0.CTRLA |= (1 << TWI_FMPEN_bp);
     #endif
     TWI0.MBAUD = (uint8_t)I2C_BAUD(I2C_SCK_BAUD);
-
-    // switch(sck_freq) {
-    //     case i2c_sck_freq::I2C_SCK_100kHz:
-    //         /* disable fast mode plus and set clock to 100kHz */
-    //         TWI0.CTRLA &= !(1 << TWI_FMPEN_bp);
-    //         TWI0.MBAUD = (uint8_t)I2C_BAUD(100000);
-    //         break;
-        
-    //     case i2c_sck_freq::I2C_SCK_400kHz:
-    //         /* disable fast mode plus and set clock to 400kHz */
-    //         TWI0.CTRLA &= !(1 << TWI_FMPEN_bp);
-    //         TWI0.MBAUD = (uint8_t)I2C_BAUD(400000);
-    //         break;
-        
-    //     case i2c_sck_freq::I2C_SCK_1MHz:
-    //         /* enable fast mode plus and set clock to 1MHz */
-    //         TWI0.CTRLA |= (1 << TWI_FMPEN_bp);
-    //         TWI0.MBAUD = (uint8_t)I2C_BAUD(1000000);
-    //         break;
-
-    //     default:
-    //         break;
-    // }
-
-
-    // TWI0.MBAUD = (uint8_t)I2C_BAUD(sck_hz);
 
     /* clear internal state of TWI peripheral */
     TWI0.MCTRLB  |= (1 << TWI_FLUSH_bp);
