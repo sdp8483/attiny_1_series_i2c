@@ -13,12 +13,30 @@ void I2C_HOST::init(i2c_sck_freq sck_freq = i2c_sck_freq::I2C_SCK_100kHz) {
     I2C_PORT.OUTCLR = SDA_PIN;
 
     /* disable special modes on SCL and SDA pins */
-    #if (BOARD == ATtiny212) || (BOARD == ATtiny212)
-    I2C_PORT.PIN1CTRL &= !(1 << PORT_INVEN_bp | 1 << PORT_PULLUPEN_bp | !PORT_ISC_INTDISABLE_gc);
-    I2C_PORT.PIN2CTRL &= !(1 << PORT_INVEN_bp | 1 << PORT_PULLUPEN_bp | !PORT_ISC_INTDISABLE_gc);
+    #if (BOARD == ATtiny212) || (BOARD == ATtiny212)    /* ATtiny212 and ATtiny412 use PA1 and PA2 */
+        /* enable internal pullups and disable all other special modes */
+        #ifdef I2C_PINS_ENABLE_INTERNAL_PULLUPS
+        I2C_PORT.PIN1CTRL &= !(1 << PORT_INVEN_bp | !PORT_ISC_INTDISABLE_gc);
+        I2C_PORT.PIN2CTRL &= !(1 << PORT_INVEN_bp | !PORT_ISC_INTDISABLE_gc);
+
+        I2C_PORT.PIN1CTRL |= (1 << PORT_PULLUPEN_bp);
+        I2C_PORT.PIN2CTRL |= (1 << PORT_PULLUPEN_bp);
+        #else
+        I2C_PORT.PIN1CTRL &= !(1 << PORT_INVEN_bp | 1 << PORT_PULLUPEN_bp | !PORT_ISC_INTDISABLE_gc);
+        I2C_PORT.PIN2CTRL &= !(1 << PORT_INVEN_bp | 1 << PORT_PULLUPEN_bp | !PORT_ISC_INTDISABLE_gc);
+        #endif
     #else
-    I2C_PORT.PIN0CTRL &= !(1 << PORT_INVEN_bp | 1 << PORT_PULLUPEN_bp | !PORT_ISC_INTDISABLE_gc);
-    I2C_PORT.PIN1CTRL &= !(1 << PORT_INVEN_bp | 1 << PORT_PULLUPEN_bp | !PORT_ISC_INTDISABLE_gc);
+        /* enable internal pullups and disable all other special modes */
+        #ifdef I2C_PINS_ENABLE_INTERNAL_PULLUPS
+        I2C_PORT.PIN0CTRL &= !(1 << PORT_INVEN_bp | !PORT_ISC_INTDISABLE_gc);
+        I2C_PORT.PIN1CTRL &= !(1 << PORT_INVEN_bp | !PORT_ISC_INTDISABLE_gc);
+
+        I2C_PORT.PIN0CTRL |= (1 << PORT_PULLUPEN_bp);
+        I2C_PORT.PIN1CTRL |= (1 << PORT_PULLUPEN_bp);
+        #else
+        I2C_PORT.PIN0CTRL &= !(1 << PORT_INVEN_bp | 1 << PORT_PULLUPEN_bp | !PORT_ISC_INTDISABLE_gc);
+        I2C_PORT.PIN1CTRL &= !(1 << PORT_INVEN_bp | 1 << PORT_PULLUPEN_bp | !PORT_ISC_INTDISABLE_gc);
+        #endif
     #endif
 
     /* set baud rate using equation 26-3 from datasheet */

@@ -10,6 +10,8 @@
 #include <stdint.h>
 
 /* Defines ------------------------------------------------------------------- */
+#define I2C_PINS_ENABLE_INTERNAL_PULLUPS    /* enable weak internal pullups on SDA and SCL pins */
+
 #if (BOARD == ATtiny212) || (BOARD == ATtiny212)
 /* ATtiny212 and ATtiny412 use PA1 and PA2 as I2C pins*/
 #define I2C_PORT            PORTA
